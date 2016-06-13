@@ -17,26 +17,33 @@
     <script defer src="packages/browser/dart.js"></script>
 </head>
 <body>
- <button id="addNewTimezone">Add new timezone</button>
-  <input id="showCurrentTime" type="checkbox" checked/>show current time
-  <div id="elements">
-    <div id="div1">
-        <p/>
-        <input id="divTime1" type="text"/>
-        <select id="divZone1">
-            <option value ="UTC">UTC</option>
-        </select>
-        <button id="divDel1">delete</button>
-    </div>
+ <h1>Tardis</h1>
 
-      <div id="div2">
-          <p/>
-          <input id="divTime2" type="text"/>
-          <select id="divZone2">
-              <option value ="UTC">UTC</option>
-          </select>
-          <button id="divDel2">delete</button>
-      </div>
-  </div>
+ <p><input id="showCurrentTime" type="checkbox" checked/>show current time</p>
+ <p>
+   <select id="selctAddTimezone">
+       <option value ="America/New_York">America/New_York</option>
+       <option value ="Pacific.Auckland" selected="true">Pacific.Auckland</option>
+   </select>
+   <button id="addNewTimezone">Add</button>
+ </p>
+ <table>
+   <tbody>
+      <tr><td>UTC</td>
+          <td><input id="divTimeUtc" type="text" value="2016/06/13 09:05"></td>
+      </tr>
+      <tr>
+          <td>America/Los_Angeles</td>
+          <td><input id="divTimeUtc" type="text" value="2016/06/13 02:05"/></td>
+          <td><button id="divDel1">delete</button></td>
+      </tr>
+      <tr>
+          <td>America/New_York</td>
+          <td><input id="divTimeUtc" type="text" value="2016/06/13 21:05"/></td>
+          <td><button id="divDel1">delete</button></td>
+      </tr>
+   </tbody>
+ </table>
+
 </body>
 </html>
