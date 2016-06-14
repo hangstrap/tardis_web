@@ -5,7 +5,7 @@ import 'package:timezone/timezone.dart';
 
 main() async {
   await initializeTimeZone();
-//  timeZoneDatabase.locations.forEach( (name, location) => print( "${name}"));
+  timeZoneDatabase.locations.forEach( (name, location) => print( "${name}"));
 
   test( "match no daylight savings", (){
     Location auckland = timeZoneDatabase.get( "Pacific/Auckland");

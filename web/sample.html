@@ -17,11 +17,11 @@
     <script defer src="packages/browser/dart.js"></script>
 </head>
 <body>
- <h1 class="tardis_header">Tardis</h1>
+ <h1>Tardis</h1>
 
- <p><input id="showCurrentTime" type="checkbox" checked class="tardis_showCurrentTime"/>show current time</p>
+ <p><input id="showCurrentTime" type="checkbox" checked/>show current time</p>
  <p>
-   <select id="selectAddTimezone">
+   <select id="selctAddTimezone">
        <option value ="America/New_York">America/New_York</option>
        <option value ="Pacific.Auckland" selected="true">Pacific.Auckland</option>
    </select>
@@ -31,6 +31,16 @@
    <tbody id="times">
       <tr id='row_utc'><td>UTC</td>
           <td><input id="value_utc" type="text" value="2016/06/13 09:05"></td>
+      </tr>
+      <tr id='row_america/los_angeles'>
+          <td>America/Los_Angeles</td>
+          <td><input id="value_america/los_angeles" type="text" value="2016/06/13 02:05"/></td>
+          <td><button id="delete_america/los_angeles">delete</button></td>
+      </tr>
+      <tr id="row_america/new_York">
+          <td>America/New_York</td>
+          <td><input id="value__america/new_York" type="text" value="2016/06/13 21:05"/></td>
+          <td><button id="delet__america/new_York">delete</button></td>
       </tr>
    </tbody>
  </table>
