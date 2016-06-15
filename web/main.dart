@@ -7,52 +7,82 @@ import 'package:intl/intl.dart';
 
 import 'package:timezone/timezone.dart';
 import 'package:timezone/browser.dart';
+//import "package:intl/intl_browser.dart";
 
 CheckboxInputElement showCurrentTime;
 TextInputElement value_utc;
-DateFormat dateFormat = new DateFormat( "MMM/d HH:mm:ss");
+DateFormat dateFormat;
 SelectElement selectAddTimezone;
+ButtonElement addNewTimezone;
+TableElement table;
 
 Timer oneSecondTimer;
 
-main() async{
- initializeTimeZone();
-  oneSecondTimer = new Timer.periodic( const Duration( seconds: 1), oneSecondPassed);
+main() async {
+  //await findSystemLocale();
+  //print( "default local ${Intl.defaultLocale}");
 
-  showCurrentTime =  querySelector('#showCurrentTime');
+  dateFormat = new DateFormat("MMM/d HH:mm:ss");
+
+  await initializeTimeZone();
+  print(local.name);
+
+  oneSecondTimer =
+      new Timer.periodic(const Duration(seconds: 1), oneSecondPassed);
+
+  showCurrentTime = querySelector('#showCurrentTime');
   showCurrentTime.onClick.listen(showCurrentTimeEventHandler);
 
-  selectAddTimezone = querySelector( "#selectAddTimezone");
+  addNewTimezone = querySelector( '#addNewTimezone');
+  addNewTimezone.onClick.listen( addNewTimezoneEventHandler);
 
+  selectAddTimezone = querySelector("#selectAddTimezone");
   selectAddTimezone.children.clear();
-  await initializeTimeZone();
-  selectAddTimezone.children.addAll( loadAllTimezones());
+  //await initializeTimeZone();
+  selectAddTimezone.children.addAll(loadAllTimezones());
 
-  value_utc = querySelector( "#value_utc");
-  return null;
+  table = querySelector( "#times");
+
+
+  value_utc = querySelector("#value_utc");
 }
 
-oneSecondPassed( Timer t){
+oneSecondPassed(Timer t) {
   DateTime now = new DateTime.now().toUtc();
-  if( showCurrentTime.checked){
-    value_utc.value= "${dateFormat.format( now)}";
+  if (showCurrentTime.checked) {
+    value_utc.value = "${dateFormat.format( now)}";
   }
 }
-showCurrentTimeEventHandler(_){
-  print( "event from checkbox");
-}
-List<OptionElement> loadAllTimezones(){
-  var result = [];
 
+showCurrentTimeEventHandler(_) {
+  print("event from checkbox");
+}
+addNewTimezoneEventHandler(_){
+  var value = selectAddTimezone.selectedOptions[0].value;
+  print( "Add button clicked ${selectAddTimezone.selectedIndex} ${value}");
+
+  var tableRow = table.addRow();
+  tableRow.id = "row_${value}";
+  tableRow.addCell().text = "${value}";
+  var time = new TextInputElement();
+  tableRow.addCell().children.add(time);
+  var delete = new ButtonElement();
+  delete.text= "delete";
+  tableRow.addCell().children.add( delete);
+}
+
+List<OptionElement> loadAllTimezones() {
+  var result = [];
 
   var keys = timeZoneDatabase.locations.keys.toList();
   keys.sort();
-  keys.forEach( (name){
-    var optionElement =  new OptionElement( data:name, value:name);
-    if( name== local.name){
+  keys.forEach((name) {
+    var optionElement = new OptionElement(data: name, value: name);
+    if (name == local.name) {
       optionElement.selected = true;
     }
-    result.add( optionElement);
+    result.add(optionElement);
   });
+
   return result;
 }
