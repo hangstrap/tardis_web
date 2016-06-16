@@ -16,7 +16,8 @@ ButtonElement addNewTimezone;
 TableElement table;
 
 Timer oneSecondTimer;
-
+Stream<DateTime> timeStream;
+StreamController<DateTime> timeStreamContoller;
 
 main() async {
   addNewTimezone = querySelector('#addNewTimezone');
@@ -34,12 +35,16 @@ main() async {
   showCurrentTime.onClick.listen(showCurrentTimeEventHandler);
   addNewTimezone.onClick.listen(addNewTimezoneEventHandler);
   await addTimezonesOptionsToSelectElement(selectAddTimezone);
+
+  timeStreamContoller = new StreamController<DateTime>.broadcast();  
 }
 
 oneSecondPassed(Timer t) {
   DateTime now = new DateTime.now().toUtc();
+
   if (showCurrentTime.checked) {
     value_utc.value = "${dateFormat.format( now)}";
+    timeStreamContoller.add( now);
   }
 }
 
@@ -49,5 +54,5 @@ showCurrentTimeEventHandler(_) {
 
 addNewTimezoneEventHandler(_) {
   var timeZone = selectAddTimezone.selectedOptions[0].value;
-  new TimeRow(timeZone).addToTable(table);
+  new TimeRow(timeZone,  timeStreamContoller.stream).addToTable(table);
 }
