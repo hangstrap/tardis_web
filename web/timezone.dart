@@ -23,3 +23,7 @@ addTimezonesOptionsToSelectElement(SelectElement selectElement) async {
   selectElement.children.clear();
   selectElement.children.addAll(loadElements());
 }
+
+TZDateTime toLocalTime(String timezone, DateTime utcTime) {
+  return new TZDateTime.from(utcTime, getLocation(timezone));
+}

@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'timezone.dart';
 
 var dateFormatter = new DateFormat("MMM/d HH:mm:ss");
 class TimeRow {
@@ -23,8 +24,9 @@ class TimeRow {
     delete.text = "delete";
     tableRow.addCell().children.add(delete);
 
-    var subscription  = timeStream.listen( (time){
-        textInput.value = "${dateFormatter.format( time)}";
+    var subscription  = timeStream.listen( (utcTime){
+        var localTime = toLocalTime( timezone, utcTime);
+        textInput.value = "${dateFormatter.format( localTime)}";
     });
 
 
