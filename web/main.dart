@@ -5,9 +5,8 @@ import 'dart:html';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
-import 'package:timezone/timezone.dart';
-import 'package:timezone/browser.dart';
-//import "package:intl/intl_browser.dart";
+import 'timerow.dart';
+import 'timezone.dart';
 
 CheckboxInputElement showCurrentTime;
 TextInputElement value_utc;
@@ -18,33 +17,23 @@ TableElement table;
 
 Timer oneSecondTimer;
 
+
 main() async {
-  //await findSystemLocale();
-  //print( "default local ${Intl.defaultLocale}");
+  addNewTimezone = querySelector('#addNewTimezone');
+  showCurrentTime = querySelector('#showCurrentTime');
+  selectAddTimezone = querySelector("#selectAddTimezone");
+  value_utc = querySelector("#value_utc");
+  table = querySelector("#times");
 
   dateFormat = new DateFormat("MMM/d HH:mm:ss");
-
-  await initializeTimeZone();
-  print(local.name);
+  selectAddTimezone = querySelector("#selectAddTimezone");
 
   oneSecondTimer =
       new Timer.periodic(const Duration(seconds: 1), oneSecondPassed);
 
-  showCurrentTime = querySelector('#showCurrentTime');
   showCurrentTime.onClick.listen(showCurrentTimeEventHandler);
-
-  addNewTimezone = querySelector( '#addNewTimezone');
-  addNewTimezone.onClick.listen( addNewTimezoneEventHandler);
-
-  selectAddTimezone = querySelector("#selectAddTimezone");
-  selectAddTimezone.children.clear();
-  //await initializeTimeZone();
-  selectAddTimezone.children.addAll(loadAllTimezones());
-
-  table = querySelector( "#times");
-
-
-  value_utc = querySelector("#value_utc");
+  addNewTimezone.onClick.listen(addNewTimezoneEventHandler);
+  await addTimezonesOptionsToSelectElement(selectAddTimezone);
 }
 
 oneSecondPassed(Timer t) {
@@ -57,32 +46,8 @@ oneSecondPassed(Timer t) {
 showCurrentTimeEventHandler(_) {
   print("event from checkbox");
 }
-addNewTimezoneEventHandler(_){
-  var value = selectAddTimezone.selectedOptions[0].value;
-  print( "Add button clicked ${selectAddTimezone.selectedIndex} ${value}");
 
-  var tableRow = table.addRow();
-  tableRow.id = "row_${value}";
-  tableRow.addCell().text = "${value}";
-  var time = new TextInputElement();
-  tableRow.addCell().children.add(time);
-  var delete = new ButtonElement();
-  delete.text= "delete";
-  tableRow.addCell().children.add( delete);
-}
-
-List<OptionElement> loadAllTimezones() {
-  var result = [];
-
-  var keys = timeZoneDatabase.locations.keys.toList();
-  keys.sort();
-  keys.forEach((name) {
-    var optionElement = new OptionElement(data: name, value: name);
-    if (name == local.name) {
-      optionElement.selected = true;
-    }
-    result.add(optionElement);
-  });
-
-  return result;
+addNewTimezoneEventHandler(_) {
+  var timeZone = selectAddTimezone.selectedOptions[0].value;
+  new TimeRow(timeZone).addToTable(table);
 }
