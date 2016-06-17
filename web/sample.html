@@ -20,14 +20,19 @@
  <h1>Tardis</h1>
 
  <p><input id="showCurrentTime" type="checkbox" checked/>show current time</p>
- <p>
-   <select id="selctAddTimezone">
-       <option value ="America/New_York">America/New_York</option>
-       <option value ="Pacific.Auckland" selected="true">Pacific.Auckland</option>
-   </select>
-   <button id="addNewTimezone">Add</button>
- </p>
  <table>
+   <thead>
+     <tr>
+       <td></td>
+       <td>
+         <select id="selectAddTimezone">
+             <option value ="America/New_York">America/New_York</option>
+             <option value ="Pacific.Auckland" selected="true">Pacific.Auckland</option>
+         </select>
+       </td>
+       <td><input id="addNewTimezone" type="button" value="Add" /></td>
+     </tr>
+   </thead>
    <tbody id="times">
       <tr id='row_utc'><td>UTC</td>
           <td><input id="value_utc" type="text" value="2016/06/13 09:05"></td>
@@ -40,7 +45,7 @@
       <tr id="row_america/new_York">
           <td>America/New_York</td>
           <td><input id="value__america/new_York" type="text" value="2016/06/13 21:05"/></td>
-          <td><button id="delet__america/new_York">delete</button></td>
+          <td><input id="delet__america/new_York" type="button" value="Delete"></td>
       </tr>
    </tbody>
  </table>

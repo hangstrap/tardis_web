@@ -20,8 +20,8 @@ class TimeRow {
     textInput = new TextInputElement();
     tableRow.addCell().children.add(textInput);
 
-    var delete = new ButtonElement();
-    delete.text = "delete";
+    var delete = new ButtonInputElement();
+    delete.value = "Delete";
     tableRow.addCell().children.add(delete);
 
     var subscription  = timeStream.listen( (utcTime){

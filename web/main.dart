@@ -12,7 +12,7 @@ CheckboxInputElement showCurrentTime;
 TextInputElement value_utc;
 DateFormat dateFormat;
 SelectElement selectAddTimezone;
-ButtonElement addNewTimezone;
+ButtonInputElement addNewTimezone;
 TableElement table;
 
 Timer oneSecondTimer;
@@ -36,7 +36,7 @@ main() async {
   addNewTimezone.onClick.listen(addNewTimezoneEventHandler);
   await addTimezonesOptionsToSelectElement(selectAddTimezone);
 
-  timeStreamContoller = new StreamController<DateTime>.broadcast();  
+  timeStreamContoller = new StreamController<DateTime>.broadcast();
 }
 
 oneSecondPassed(Timer t) {
