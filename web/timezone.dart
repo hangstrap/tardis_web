@@ -7,7 +7,7 @@ addTimezonesOptionsToSelectElement(SelectElement selectElement) async {
   await initializeTimeZone();
 
   List<OptionElement> loadElements() {
-    var result = [];
+    var result = [ new OptionElement(data:"UTC", value:"UTC")];
     var keys = timeZoneDatabase.locations.keys.toList();
     keys.sort();
     keys.forEach((name) {
@@ -24,6 +24,19 @@ addTimezonesOptionsToSelectElement(SelectElement selectElement) async {
   selectElement.children.addAll(loadElements());
 }
 
-TZDateTime toLocalTime(String timezone, DateTime utcTime) {
-  return new TZDateTime.from(utcTime, getLocation(timezone));
+DateTime toLocalTime(String timezone, DateTime utcTime) {
+  if( timezone == "UTC"){
+    return utcTime;
+  }else{
+    return new TZDateTime.from(utcTime, getLocation(timezone));
+  }
+}
+
+DateTime toUtc(String timezone, DateTime utcTime) {
+//  if( timezone == "UTC"){
+//    return new  TZDateTime.
+//  }else{
+    print(  utcTime.toIso8601String());
+    return TZDateTime.parse( getLocation(timezone), utcTime.toIso8601String());
+//  }
 }

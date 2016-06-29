@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'timezone.dart';
 
-var dateFormatter = new DateFormat("MMM/d HH:mm:ss");
+var dateFormatter = new DateFormat("yyyy/MMM/d HH:mm:ss");
 class TimeRow {
   TableRowElement tableRow;
   TextInputElement textInput;
@@ -19,7 +19,7 @@ class TimeRow {
 
     textInput = new TextInputElement();
     tableRow.addCell().children.add(textInput);
-
+    textInput.onInput.listen( userInput);
     var delete = new ButtonInputElement();
     delete.value = "Delete";
     tableRow.addCell().children.add(delete);
@@ -38,6 +38,18 @@ class TimeRow {
   }
   addToTable( TableElement table){
     table.children.add( tableRow);
+
+  }
+  userInput(_){
+    var value = textInput.value;
+    try{
+      DateTime time = dateFormatter.parseLoose( value);
+      DateTime utcTime = toUtc( timezone, time);
+      print( "Parsed ${time}  ${utcTime}");
+
+    }on FormatException {
+      print( "could not parse ${value}");
+    };
 
   }
 }

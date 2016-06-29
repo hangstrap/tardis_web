@@ -9,7 +9,6 @@ import 'timerow.dart';
 import 'timezone.dart';
 
 CheckboxInputElement showCurrentTime;
-TextInputElement value_utc;
 DateFormat dateFormat;
 SelectElement selectAddTimezone;
 ButtonInputElement addNewTimezone;
@@ -23,7 +22,6 @@ main() async {
   addNewTimezone = querySelector('#addNewTimezone');
   showCurrentTime = querySelector('#showCurrentTime');
   selectAddTimezone = querySelector("#selectAddTimezone");
-  value_utc = querySelector("#value_utc");
   table = querySelector("#times");
 
   dateFormat = new DateFormat("MMM/d HH:mm:ss");
@@ -43,7 +41,6 @@ oneSecondPassed(Timer t) {
   DateTime now = new DateTime.now().toUtc();
 
   if (showCurrentTime.checked) {
-    value_utc.value = "${dateFormat.format( now)}";
     timeStreamContoller.add( now);
   }
 }
