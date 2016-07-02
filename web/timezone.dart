@@ -32,11 +32,10 @@ DateTime toLocalTime(String timezone, DateTime utcTime) {
   }
 }
 
-DateTime toUtc(String timezone, DateTime utcTime) {
-//  if( timezone == "UTC"){
-//    return new  TZDateTime.
-//  }else{
-    print(  utcTime.toIso8601String());
-    return TZDateTime.parse( getLocation(timezone), utcTime.toIso8601String());
-//  }
+DateTime toUtc(String timezone, int year, int month, int day, int hour, int minute) {
+ if( timezone == "UTC"){
+   return new  TZDateTime.utc( year, month, day, hour, minute);
+ }else{
+    return new TZDateTime( getLocation(timezone), year, month, day, hour, minute).toUtc();
+ }
 }

@@ -48,8 +48,11 @@ oneSecondPassed(Timer t) {
 showCurrentTimeEventHandler(_) {
   print("event from checkbox");
 }
+ userEnteredTime( DateTime time){
+     timeStreamContoller.add( time);
+ }
 
 addNewTimezoneEventHandler(_) {
   var timeZone = selectAddTimezone.selectedOptions[0].value;
-  new TimeRow(timeZone,  timeStreamContoller.stream).addToTable(table);
+  new TimeRow(timeZone,  timeStreamContoller.stream, userEnteredTime ).addToTable(table);
 }

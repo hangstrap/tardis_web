@@ -19,4 +19,10 @@ main() async {
     TZDateTime aucklandTime = new TZDateTime.from( utc, auckland);
     expect( aucklandTime.toIso8601String(), equals( "2016-03-03T22:10:00.000+1300"));
   });
+  test( "match  daylight savings", (){
+    Location auckland = timeZoneDatabase.get( "Pacific/Auckland");
+    TZDateTime aucklandTime = new TZDateTime( auckland, 2016, 03, 03, 09,10);
+    expect( aucklandTime.toIso8601String(), equals( "2016-03-03T22:10:00.000+1300"));
+  });
+
 }
