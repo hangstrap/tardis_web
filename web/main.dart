@@ -19,7 +19,6 @@ Stream<DateTime> timeStream;
 StreamController<DateTime> timeStreamContoller;
 
 main() async {
-
   timeStreamContoller = new StreamController<DateTime>.broadcast();
 
   addNewTimezone = querySelector('#addNewTimezone');
@@ -52,8 +51,8 @@ userEnteredTime(DateTime time) {
 }
 
 addNewRow(String timeZone) {
-  timerow.TimeRow row = new timerow.TimeRow(timeZone, timeStreamContoller.stream,
-      (time) => timeStreamContoller.add(time));
+  timerow.TimeRow row = new timerow.TimeRow(timeZone,
+      timeStreamContoller.stream, (time) => timeStreamContoller.add(time));
 
   row.addToTable(table);
 }
