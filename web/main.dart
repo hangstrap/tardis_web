@@ -5,8 +5,8 @@ import 'dart:html';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
-import 'timerow.dart';
-import 'timezone.dart';
+import 'timerow.dart' as timerow;
+import 'timezone.dart' as timezone;
 
 CheckboxInputElement showCurrentTime;
 DateFormat dateFormat;
@@ -19,6 +19,9 @@ Stream<DateTime> timeStream;
 StreamController<DateTime> timeStreamContoller;
 
 main() async {
+
+  timeStreamContoller = new StreamController<DateTime>.broadcast();
+
   addNewTimezone = querySelector('#addNewTimezone');
   showCurrentTime = querySelector('#showCurrentTime');
   selectAddTimezone = querySelector("#selectAddTimezone");
@@ -27,40 +30,30 @@ main() async {
   dateFormat = new DateFormat("MMM/d HH:mm:ss");
   selectAddTimezone = querySelector("#selectAddTimezone");
 
-  oneSecondTimer =
-      new Timer.periodic(const Duration(seconds: 1), oneSecondPassed);
-
-  showCurrentTime.onClick.listen(showCurrentTimeEventHandler);
-  addNewTimezone.onClick.listen(addNewTimezoneEventHandler);
-  await addTimezonesOptionsToSelectElement(selectAddTimezone);
-
-  timeStreamContoller = new StreamController<DateTime>.broadcast();
-  window.localStorage.forEach( (timeZone, _) {
-    addNewRow( timeZone);
+  //Every second we may need to display the time
+  oneSecondTimer = new Timer.periodic(const Duration(seconds: 1), (Timer t) {
+    DateTime now = new DateTime.now().toUtc();
+    if (showCurrentTime.checked) {
+      timeStreamContoller.add(now);
+    }
   });
-}
 
-oneSecondPassed(Timer t) {
-  DateTime now = new DateTime.now().toUtc();
+  addNewTimezone.onClick
+      .listen((_) => addNewRow(selectAddTimezone.selectedOptions[0].value));
 
-  if (showCurrentTime.checked) {
-    timeStreamContoller.add(now);
-  }
-}
+  await timezone.addTimezonesOptionsToSelectElement(selectAddTimezone);
 
-showCurrentTimeEventHandler(_) {
-  print("event from checkbox");
+  //Load users last items from local storage
+  window.localStorage.forEach((timeZone, _) => addNewRow(timeZone));
 }
 
 userEnteredTime(DateTime time) {
   timeStreamContoller.add(time);
 }
 
-addNewTimezoneEventHandler(_) {
-  addNewRow(selectAddTimezone.selectedOptions[0].value);
-}
-
 addNewRow(String timeZone) {
-  new TimeRow(timeZone, timeStreamContoller.stream, userEnteredTime)
-      .addToTable(table);
+  timerow.TimeRow row = new timerow.TimeRow(timeZone, timeStreamContoller.stream,
+      (time) => timeStreamContoller.add(time));
+
+  row.addToTable(table);
 }
