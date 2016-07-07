@@ -35,24 +35,32 @@ main() async {
   await addTimezonesOptionsToSelectElement(selectAddTimezone);
 
   timeStreamContoller = new StreamController<DateTime>.broadcast();
+  window.localStorage.forEach( (timeZone, _) {
+    addNewRow( timeZone);
+  });
 }
 
 oneSecondPassed(Timer t) {
   DateTime now = new DateTime.now().toUtc();
 
   if (showCurrentTime.checked) {
-    timeStreamContoller.add( now);
+    timeStreamContoller.add(now);
   }
 }
 
 showCurrentTimeEventHandler(_) {
   print("event from checkbox");
 }
- userEnteredTime( DateTime time){
-     timeStreamContoller.add( time);
- }
+
+userEnteredTime(DateTime time) {
+  timeStreamContoller.add(time);
+}
 
 addNewTimezoneEventHandler(_) {
-  var timeZone = selectAddTimezone.selectedOptions[0].value;
-  new TimeRow(timeZone,  timeStreamContoller.stream, userEnteredTime ).addToTable(table);
+  addNewRow(selectAddTimezone.selectedOptions[0].value);
+}
+
+addNewRow(String timeZone) {
+  new TimeRow(timeZone, timeStreamContoller.stream, userEnteredTime)
+      .addToTable(table);
 }

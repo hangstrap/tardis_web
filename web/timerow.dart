@@ -16,6 +16,7 @@ class TimeRow {
 
   TimeRow(this.timezone, Stream<DateTime> timeStream,
       this.userEnteredTimeCallback) {
+    window.localStorage[timezone] = timezone;
     tableRow = new TableRowElement();
 
     tableRow.id = "row_${timezone}";
@@ -39,6 +40,7 @@ class TimeRow {
     delete.onClick.listen((_) {
       tableRow.remove();
       subscription.cancel();
+      window.localStorage.remove(timezone);
     });
   }
   addToTable(TableElement table) {
