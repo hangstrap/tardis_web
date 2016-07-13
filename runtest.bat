@@ -1,0 +1,1 @@
+pub run test -p "dartium,vm"
