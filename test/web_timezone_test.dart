@@ -12,12 +12,6 @@ main () async{
 
   await initializeTimeZone();
 
-  setUp((){
-    SelectElement options = new SelectElement();
-    options.id = 'addNewTimezone';
-    querySelector('body').children.add( options);
-  });
-
 
   test("Should convert UTC time to Local", (){
 
@@ -32,7 +26,7 @@ main () async{
   });
 
   test( "load selector with timezone", (){
-    SelectElement selectAddTimezone = querySelector('#addNewTimezone');
+    SelectElement selectAddTimezone = querySelector('#selectAddTimezone');
     expect( selectAddTimezone,  isNotNull);
     underTest.addTimezonesOptionsToSelectElement( selectAddTimezone);
     expect( selectAddTimezone.children.length, greaterThan( 100));
