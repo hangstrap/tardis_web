@@ -4,6 +4,7 @@
 import 'dart:html';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:timezone/browser.dart';
 
 import 'timerow.dart' as timerow;
 import 'timezone.dart' as timezone;
@@ -19,6 +20,9 @@ Stream<DateTime> timeStream;
 StreamController<DateTime> timeStreamContoller;
 
 main() async {
+
+  await initializeTimeZone();
+
   timeStreamContoller = new StreamController<DateTime>.broadcast();
 
   addNewTimezone = querySelector('#addNewTimezone');
@@ -40,10 +44,15 @@ main() async {
   addNewTimezone.onClick
       .listen((_) => addNewRow(selectAddTimezone.selectedOptions[0].value));
 
-  await timezone.addTimezonesOptionsToSelectElement(selectAddTimezone);
+  addTimezonesOptionsToSelectElement(selectAddTimezone);
 
   //Load users last items from local storage
   window.localStorage.forEach((timeZone, _) => addNewRow(timeZone));
+}
+
+addTimezonesOptionsToSelectElement(SelectElement selectElement) async {
+  selectElement.children.clear();
+  selectElement.children.addAll(timezone.loadElements());
 }
 
 userEnteredTime(DateTime time) {

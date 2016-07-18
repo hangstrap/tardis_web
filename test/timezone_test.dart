@@ -1,4 +1,3 @@
-@TestOn( 'browser')
 
 import 'dart:html';
 import 'package:test/test.dart';
@@ -11,8 +10,6 @@ import '../web/timezone.dart' as underTest;
 main () async{
 
   await initializeTimeZone();
-
-
   test("Should convert UTC time to Local", (){
 
     var utc = new DateTime.utc(2016, 03, 03, 09, 10);
@@ -24,11 +21,17 @@ main () async{
     var result = underTest.toUtc( "Pacific/Auckland", 2016, 3,3 ,9, 10);
     expect( result.toIso8601String(), "2016-03-02T20:10:00.000Z");
   });
-
-  test( "load selector with timezone", (){
-    SelectElement selectAddTimezone = querySelector('#selectAddTimezone');
-    expect( selectAddTimezone,  isNotNull);
-    underTest.addTimezonesOptionsToSelectElement( selectAddTimezone);
-    expect( selectAddTimezone.children.length, greaterThan( 100));
+  group( "load elements", (){
+      List<OptionElement> elements = underTest.loadElements();
+  test( "should have lots of element", (){
+    expect( elements.length, greaterThan( 100));
   });
+    test( "first one should be UTC", (){
+      expect( elements[0].value, "UTC");
+  });
+  test( "should contain Auckland", (){
+//    expect( elements, contains( )));
+  }, skip:"no idea how to do this!");
+
+});
 }
