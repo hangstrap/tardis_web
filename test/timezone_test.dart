@@ -1,10 +1,12 @@
+@TestOn('browser')
+
 import 'dart:html';
 import 'package:test/test.dart';
 import 'package:timezone/browser.dart';
 
 import '../web/timezone.dart' as underTest;
 
-@TestOn('browser')
+
 main() async {
   await initializeTimeZone();
   test("Should convert UTC time to Local", () {
