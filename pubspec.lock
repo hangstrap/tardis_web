@@ -85,6 +85,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.2+2"
+  http:
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.3+16"
   http_multi_server:
     description:
       name: http_multi_server
@@ -127,6 +133,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
+  package_resolver:
+    description:
+      name: package_resolver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   path:
     description:
       name: path
@@ -163,6 +175,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.5+2"
+  shelf_packages_handler:
+    description:
+      name: shelf_packages_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   shelf_static:
     description:
       name: shelf_static
@@ -180,13 +198,13 @@ packages:
       name: source_map_stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.1.4"
   source_maps:
     description:
       name: source_maps
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.1+1"
+    version: "0.10.3"
   source_span:
     description:
       name: source_span
@@ -216,7 +234,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.15+1"
+    version: "0.12.18+2"
   timezone:
     description:
       name: timezone
@@ -253,4 +271,5 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.10"
-sdk: ">=1.17.0-dev.6.2 <1.20.0"
+sdks:
+  dart: ">=1.23.0 <2.0.0"

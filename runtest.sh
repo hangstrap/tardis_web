@@ -1,4 +1,4 @@
 
 #!/bin/bash
 
-pub run test -p "dartium,vm"
+/usr/lib/dart/bin/pub run test -p "dartium,vm"
